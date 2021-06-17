@@ -76,7 +76,7 @@ const LandingPage = () => {
     formData.append("thal",values.thal);
 
     // console.log(formData.get('age'))
-    fetch("http://localhost:5000",
+    fetch("https://heart-attack-model.herokuapp.com/predict",
     {
         method:'POST',
         body:formData
