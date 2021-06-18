@@ -2,24 +2,19 @@ import logo from './logo.svg';
 import './App.css';
 import {useEffect} from 'react'
 import LandingPage from './components/LandingPage';
-
+import Navbar from './components/Navbar'
+import {Route,BrowserRouter} from 'react-router-dom'
+import Home from './components/Home'
 
 function App() {
 
-  // useEffect(() => {
-  //   fetch("http://localhost:5000/",
-  //   {
-  //     method:'GET',
-  //     headers: {
-  //       'Access-Control-Allow-Origin':'*'
-  //     }
-  //   })
-  //   .then(res=>res.json())
-  //   .then(res=>console.log(res))
-  // }, [])
   return (
     <div className="App">
-     <LandingPage/>
+      <BrowserRouter>
+      <Navbar/>
+      <Route exact path="/"><Home/></Route>
+      <Route exact path="/checkup"><LandingPage/></Route>
+      </BrowserRouter>
     </div>
   );
 }
