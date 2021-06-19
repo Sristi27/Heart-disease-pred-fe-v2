@@ -10,8 +10,10 @@ import {
   Select,
   Dialog,
   Input,
+  Box,
   DialogActions,
   DialogContent,
+  Grid,
   DialogContentText,
   Typography,
   DialogTitle,
@@ -24,9 +26,9 @@ import icon from "./../images/icon.png";
 
 const useStyles = makeStyles((theme) => ({
   inputs: {
-    width: "80%",
+    width: "85%",
     margin: "0 auto",
-    marginBottom:'5px'
+    marginBottom:'8px'
   },
   root:
 {
@@ -184,12 +186,13 @@ const LandingPage = () => {
   };
 
   return (
-    <div className={classes.div}>
-      <div className={classes.root}>
-        <div className={classes.image}>
-          <img src={icon} height="400px"/>
-        </div>
-        <form className={classes.form} noValidate autoComplete="off">
+    <Box pt={2} pb={2}>
+      <Grid container alignItems="center" justify="center">
+        <Grid item xs={12} lg={6}>
+        <img src={icon} class="icon"/>
+        </Grid>
+        <Grid item xs={12} lg={6}>
+        <form className="form" noValidate autoComplete="off">
           <h3>Please enter your details below ~</h3>
           <Typography
             variant="subtitle2"
@@ -468,7 +471,9 @@ const LandingPage = () => {
           style={{width:'45%'}} onClick={reset} variant="contained" color="primary">Reset Form</Button>
           </div>
         </form>
-      </div>
+     
+        </Grid>
+      </Grid>
       
       
       <Backdrop className={classes.backdrop} open={open}>
@@ -507,7 +512,7 @@ const LandingPage = () => {
       ) : (
         <></>
       )}
-    </div>
+    </Box>
   );
 };
 

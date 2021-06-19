@@ -10,6 +10,60 @@
 
 #select
 {
-  width:80%;
+  width:85%;
   margin:8px auto;
+}
+
+
+.home
+{
+    display:flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    align-items: center;
+    height: 70vh;
+    width:100%;
+ 
+}
+
+.home-content
+{
+  width: 70%;
+  margin:10px auto;
+  font-size: 20px;
+  line-height: 1.8em;
+}
+
+.image
+{
+  height:400px;
+}
+.home-text
+{
+  width: 50%;
+}
+.img-box
+{
+  width:50%;
+   padding:20px
+}
+
+.icon
+{
+  height:400px;
+}
+
+
+
+@media screen and (max-width:768px) {
+  .image{
+    height:200px;
+  }
+
+  .icon
+  {
+    height:200px
+  }
+
+  
 }

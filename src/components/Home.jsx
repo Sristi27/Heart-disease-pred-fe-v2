@@ -1,31 +1,22 @@
-import { Typography, Button } from "@material-ui/core";
+import { Typography, Button ,Grid,Box } from "@material-ui/core";
 import React from "react";
 import { Link } from "react-router-dom";
 import heart2 from "./../images/heart2.jpeg";
 
 const Home = () => {
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "space-between",
-        marginTop: "20px",
-        alignItems: "center",
-        height: "70vh",
-      }}
-    >
-      <Typography variant="paragraph">
-        <h1 style={{ textAlign: "center" }}>Heart Seva</h1>
-        <div
-          style={{
-            width: "70%",
-            margin: "10px auto",
-            fontSize: "20px",
-            lineHeight: "1.8em",
-          }}
-        >
-          Welcome to out health application.
-          <br />
+<Box p={2}>
+    <Grid container
+    justify="center"
+    alignItems="center">
+      <Grid item sm={12} lg={6}>
+      <img src={heart2} class="image"/>
+      </Grid>
+      <Grid item sm={12} lg={6}>
+      <h1>Heart Seva</h1>
+          <div className="home-content">
+            Welcome to our Health Application.
+            <br/>
           This application is for predicting chances of you having a heart
           disease. Enter your medical details and we will do a quick check and
           tell you about your chances of having a heart disease. Go ahead to the
@@ -39,9 +30,10 @@ const Home = () => {
             Checkup
           </Button>
         </Link>
-      </Typography>
-      <img src={heart2} height="450px" />
-    </div>
+      </Grid>
+      
+    </Grid>
+</Box>
   );
 };
 
