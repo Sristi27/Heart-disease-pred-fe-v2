@@ -25,11 +25,23 @@
     width:100%;
  
 }
+ 
+.form::before{
+  content: '';
+  height:100vh;
+  width:100vw;
+  z-index: -1;
+  opacity: 0.15;
+  position:absolute;
+  top:30px;
+  left:0;
+  background: url('./images/icon.png') no-repeat center center;
+}
 
 .home-content
 {
   width: 70%;
-  margin:10px auto;
+  margin:40px auto;
   font-size: 20px;
   line-height: 1.8em;
 }
@@ -53,7 +65,10 @@
   height:400px;
 }
 
-
+.tool{
+  display: flex;
+  justify-content: space-between;
+}
 
 @media screen and (max-width:768px) {
   .image{

@@ -1,10 +1,10 @@
-import logo from './logo.svg';
-import './App.css';
-import {useEffect} from 'react'
-import LandingPage from './components/LandingPage';
+import './App.css'; 
+import Checkup from './components/Checkup';
 import Navbar from './components/Navbar'
 import {Route,BrowserRouter} from 'react-router-dom'
-import Home from './components/Home'
+import Home from './components/Home'  
+import HistoryTable from './components/HistoryTable';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
 
@@ -12,8 +12,10 @@ function App() {
     <div className="App">
       <BrowserRouter>
       <Navbar/>
+      {/* <Auth/> */}
       <Route exact path="/"><Home/></Route>
-      <Route exact path="/checkup"><LandingPage/></Route>
+      <ProtectedRoute exact path="/checkup/:id"><Checkup/></ProtectedRoute>
+      <ProtectedRoute exact path="/history/:id"><HistoryTable/></ProtectedRoute>
       </BrowserRouter>
     </div>
   );
