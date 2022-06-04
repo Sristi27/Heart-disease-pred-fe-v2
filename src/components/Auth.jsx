@@ -4,16 +4,20 @@ import { Link } from "react-router-dom";
 import { Button, IconButton } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
+import { CustomTooltip } from "./CustomTooltip";
+import { Stack } from "@mui/material";
+import "./../App.css"
 
-const Auth = () => {
+const Auth = ({onError,onSuccess}) => {
   const clientId =
     "893518889771-8rrmcfsksof02js275v6qosubdjqufun.apps.googleusercontent.com";
 
+   
   const history = useHistory();
   const [loginData, setLoginData] = useState(
     localStorage.getItem("loginData")
-      ? JSON.parse(localStorage.getItem("loginData"))
-      : ""
+      ? JSON.parse(localStorage.getItem("loginData")) //lgged in
+      : ""  //not logged in
   );
 
   const handleFailure = (result) => {
@@ -21,6 +25,7 @@ const Auth = () => {
   };
 
   const handleLogin = async (googleData) => {
+    console.log(googleData);
     await fetch("http://localhost:5000/api/google-login", {
       method: "POST",
       body: JSON.stringify({
@@ -32,11 +37,12 @@ const Auth = () => {
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
-        setLoginData(res);
-        localStorage.setItem("loginData", JSON.stringify(res.user));
+        localStorage.setItem("loginData", JSON.stringify(res.user)); 
+        onSuccess("User logged in successfully");
+        setLoginData(res.user);
+        //name,email,_id->mongo_user_id
       })
-      .catch((err) => console.log(err));
+      .catch((err) => onError("Login Failed. Please try again."));
   };
 
   const handleLogout = () => {
@@ -48,40 +54,27 @@ const Auth = () => {
   return (
     <>
       {loginData ? (
-        <>
-          <Link
-            to={{ pathname: `/checkup/${loginData._id}` }}
-            style={{ textDecoration: "none" }}
-          >
-            <Button style={{ color: "white" }} align='center'>Checkup</Button>
+        <Stack direction="row" alignItems="center" spacing={2}>
+          <Link className="navbarLinks" to={{ pathname: `/checkup/${loginData._id}` }}>
+            <Button className="navbarBtn">Checkup</Button>
           </Link>
-          <Link
-            to={{ pathname: `/history/${loginData._id}` }}
-            style={{ textDecoration: "none" }}
-          >
-            <Button style={{ color: "white" }}>History</Button>
+          <Link className="navbarLinks" to={{ pathname: `/history/${loginData._id}` }}>
+            <Button className="navbarBtn">History</Button>
           </Link>
-          <IconButton aria-label="login" onClick={() => handleLogout()} size="small">
-            <LogoutIcon style={{ color: "white" }} />
+          <CustomTooltip title="Logout">
+          <IconButton aria-label="login" onClick={() => handleLogout()} size="medium">
+            <LogoutIcon className="navbarBtn"/>
           </IconButton>
-        </>
+          </CustomTooltip>
+        </Stack>
       ) : (
-        <span align="right">
           <GoogleLogin
           clientId={clientId}
           buttonText="Log in with Google"
-          // buttonText={
-          //   <>
-          //   <IconButton aria-label="login" onClick={() => handleLogout()} size="small">
-          //   <LogoutIcon style={{ color: "white" }} />
-          // </IconButton>
-          // </>
-          // }
           onSuccess={handleLogin}
           onFailure={handleFailure}
           cookiePolicy={"single_host_origin"}
         ></GoogleLogin>
-        </span>
       )}
     </>
   );

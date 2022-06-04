@@ -8,10 +8,14 @@ import {
   Grid,
   Select,
   Typography,
-  Tooltip,
+  Box,
 } from "@material-ui/core";
 import "./../App.css";
 import { CustomTooltip } from "./CustomTooltip";
+import ThalassemiaOptions from "./TooltipOptions/ThalassemiaOptions";
+import ChestPainOptions from "./TooltipOptions/ChestPainOptions";
+import ECGOptions from "./TooltipOptions/ECGOptions";
+import { elements } from "./FormElements/contents";
 
 const useStyles = makeStyles((theme) => ({
   inputs: {
@@ -49,100 +53,56 @@ const Form = ({ submitFn }) => {
 
   return (
     <>
+      <Box mt={3} mb={5}>
+        <Typography variant="h4">Please enter your details below ~</Typography>
+      </Box>
       <form className="form" noValidate autoComplete="off">
-        <h2>Please enter your details below ~</h2>
-        <Typography
-          variant="subtitle2"
-          style={{ fontSize: "15px" }}
-          color="secondary"
-        >
-          (All details are mandatory)
-        </Typography>
-        <br />
         <Grid container alignItems="center" justify="center">
           <Grid item xs={12} lg={6}>
             {/* age */}
-            <CustomTooltip title="Age" placement="right-start">
-              <TextField
-                className={classes.inputs}
-                value={values.age}
-                type="number"
-                id="outlined-primary"
-                inputProps={{
-                  inputMode: "numeric",
-                  pattern: "[0-9]*",
-                  min: 10,
-                  max: 20,
-                }}
-                required
-                label="Age"
-                color="primary"
-                variant="outlined"
-                onChange={(e) => setValues({ ...values, age: e.target.value })}
-              />
-            </CustomTooltip>
+            <TextField
+              className={classes.inputs}
+              value={values.age}
+              type="number"
+              id="outlined-primary"
+              inputProps={{
+                inputMode: "numeric",
+                pattern: "[0-9]*",
+                min: 1,
+                max: 100,
+              }}
+              required
+              label="Age"
+              color="primary"
+              variant="outlined"
+              onChange={(e) => setValues({ ...values, age: e.target.value })}
+            />
 
             {/* sex */}
-            <CustomTooltip title="Gender" placement="right-start">
-              <FormControl
-                required
-                variant="outlined"
-                id="select"
-                className={classes.FormControl}
+            <FormControl
+              required
+              variant="outlined"
+              id="select"
+              className={classes.FormControl}
+            >
+              <InputLabel htmlFor="outlined-age-native-simple">
+                Gender
+              </InputLabel>
+              <Select
+                native
+                value={values.sex}
+                onChange={(e) => setValues({ ...values, sex: e.target.value })}
+                label="Gender"
               >
-                <InputLabel htmlFor="outlined-age-native-simple">
-                  Gender
-                </InputLabel>
-                <Select
-                  native
-                  value={values.sex}
-                  onChange={(e) =>
-                    setValues({ ...values, sex: e.target.value })
-                  }
-                  label="Gender"
-                >
-                  <option aria-label="None" value="" />
-                  <option value={0}>Male</option>
-                  <option value={1}>Female</option>
-                </Select>
-              </FormControl>
-            </CustomTooltip>
+                <option aria-label="None" value="" />
+                {elements.gender.map((elem) => (
+                  <option value={elem.value}>{elem.label}</option>
+                ))}
+              </Select>
+            </FormControl>
 
             {/* chest pain  */}
-            <CustomTooltip placement="right-start"
-            title={
-              <React.Fragment>
-                <Typography variant="subtitle1" color="inherit">
-                  Chest Pain Type
-                </Typography>
-                <div>
-                  <span style={{display:'flex'}}>
-                  <Typography variant="subtitle2">
-                    1.Typical Angina:
-                  </Typography>
-                  <Typography variant="body2">hello</Typography>
-                  </span>
-                  <span style={{display:'flex'}}>
-                  <Typography variant="subtitle2">
-                    2.Atypical Angina:
-                  </Typography>
-                  <Typography variant="body2">hello</Typography>
-                  </span>
-                  <span style={{display:'flex'}}>
-                  <Typography variant="subtitle2">
-                    3.Non-anginal pain:
-                  </Typography>
-                  <Typography variant="body2">hello</Typography>
-                  </span>
-                  <span style={{display:'flex'}}>
-                  <Typography variant="subtitle2">
-                    4.Asymptomatic:
-                  </Typography>
-                  <Typography variant="body2">hello</Typography>
-                  </span>
-                </div>
-              </React.Fragment>
-            }>
+            <CustomTooltip placement="right-start" title={ChestPainOptions}>
               <FormControl
                 required
                 variant="outlined"
@@ -161,105 +121,74 @@ const Form = ({ submitFn }) => {
                   label="Chest Pain Type"
                 >
                   <option aria-label="None" value="" />
-                  <option value={0}>Typical Angina</option>
-                  <option value={1}>Atypical Angina</option>
-                  <option value={2}>Non-anginal Pain</option>
-                  <option value={3}>Asymptomatic</option>
+                  {elements.chestPain.map((elem) => (
+                    <option value={elem.value}>{elem.label}</option>
+                  ))}
                 </Select>
               </FormControl>
             </CustomTooltip>
 
             {/* presure */}
-            <CustomTooltip title="Blood Pressure" placement="right-start">
-              <TextField
-                className={classes.inputs}
-                value={values.restingBloodPressure}
-                required
-                id="outlined-primary"
-                type="number"
-                label="Blood Pressure in mm Hg"
-                variant="outlined"
-                color="primary"
-                inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
-                onChange={(e) =>
-                  setValues({ ...values, restingBloodPressure: e.target.value })
-                }
-              />
-            </CustomTooltip>
+            <TextField
+              className={classes.inputs}
+              value={values.restingBloodPressure}
+              required
+              id="outlined-primary"
+              type="number"
+              label="Blood Pressure in mm Hg"
+              variant="outlined"
+              color="primary"
+              inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
+              onChange={(e) =>
+                setValues({ ...values, restingBloodPressure: e.target.value })
+              }
+            />
 
             {/* chol */}
-            <CustomTooltip title="Cholestrol Value" placement="right-start">
-              <TextField
-                className={classes.inputs}
-                value={values.cholestrol}
-                id="outlined-primary"
-                label="Cholestrol in mg/dl"
-                variant="outlined"
-                type="number"
-                color="primary"
-                required
-                inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
-                onChange={(e) =>
-                  setValues({ ...values, cholestrol: e.target.value })
-                }
-              />
-            </CustomTooltip>
+            <TextField
+              className={classes.inputs}
+              value={values.cholestrol}
+              id="outlined-primary"
+              label="Cholestrol in mg/dl"
+              variant="outlined"
+              type="number"
+              color="primary"
+              required
+              inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
+              onChange={(e) =>
+                setValues({ ...values, cholestrol: e.target.value })
+              }
+            />
           </Grid>
+
+          {/* sugar */}
           <Grid item xs={12} lg={6}>
-            {/* sugar */}
-            <CustomTooltip
-              title="Fasting Blood sugar rate"
-              placement="left-start"
+            <FormControl
+              variant="outlined"
+              className={classes.FormControl}
+              required
+              id="select"
             >
-              <FormControl
-                variant="outlined"
-                className={classes.FormControl}
-                required
-                id="select"
+              <InputLabel htmlFor="outlined-age-native-simple">
+                Fasting Blood Sugar greater than 120mg/dl?
+              </InputLabel>
+              <Select
+                native
+                value={values.fastingBloodSugar}
+                onChange={(e) =>
+                  setValues({ ...values, fastingBloodSugar: e.target.value })
+                }
+                label="Fasting Blood Sugar greater than 120mg/dl?"
               >
-                <InputLabel htmlFor="outlined-age-native-simple">
-                  Fasting Blood Sugar greater than 120mg/dl?
-                </InputLabel>
-                <Select
-                  native
-                  value={values.fastingBloodSugar}
-                  onChange={(e) =>
-                    setValues({ ...values, fastingBloodSugar: e.target.value })
-                  }
-                  label="Fasting Blood Sugar greater than 120mg/dl?"
-                >
-                  <option aria-label="None" value="" />
-                  <option value={0}>No</option>
-                  <option value={1}>Yes</option>
-                </Select>
-              </FormControl>
-            </CustomTooltip>
+                <option aria-label="None" value="" />
+                {elements.sugar.map((elem) => (
+                  <option value={elem.value}>{elem.label}</option>
+                ))}
+              </Select>
+            </FormControl>
 
             {/* ecg  */}
-            <CustomTooltip
-              placement="left-start"
-              title={
-                <React.Fragment>
-                  <Typography variant="subtitle1" color="inherit">
-                    Eco-cardiogram Results
-                  </Typography>
-                  <div>
-                    <span style={{display:'flex'}}>
-                    <Typography variant="subtitle2">
-                      1.ST-T Wave Abnormality:
-                    </Typography>
-                    <Typography variant="body2">hello</Typography>
-                    </span>
-                    <span style={{display:'flex'}}>
-                    <Typography variant="subtitle2">
-                      2.Left ventricular hypertrophy:
-                    </Typography>
-                    <Typography variant="body2">hello</Typography>
-                    </span>
-                  </div>
-                </React.Fragment>
-              }
-            >
+            <CustomTooltip placement="left-start" title={ECGOptions}>
               <FormControl
                 required
                 variant="outlined"
@@ -278,32 +207,28 @@ const Form = ({ submitFn }) => {
                   }
                 >
                   <option aria-label="None" value="" />
-                  <option value={0}>Normal</option>
-                  <option value={1}>Having ST-T wave abnormality</option>
-                  <option value={2}>
-                    Probable or definite left ventricular hypertrophy
-                  </option>
+                  {elements.ecg.map((elem) => (
+                    <option value={elem.value}>{elem.label}</option>
+                  ))}
                 </Select>
               </FormControl>
             </CustomTooltip>
 
             {/* heartrate */}
-            <CustomTooltip title="Maximum Heart Rate" placement="left-start">
-              <TextField
-                required
-                className={classes.inputs}
-                value={values.heartRate}
-                inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
-                id="outlined-primary"
-                label="Max Heart Rate"
-                type="number"
-                variant="outlined"
-                color="primary"
-                onChange={(e) =>
-                  setValues({ ...values, heartRate: e.target.value })
-                }
-              />
-            </CustomTooltip>
+            <TextField
+              required
+              className={classes.inputs}
+              value={values.heartRate}
+              inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
+              id="outlined-primary"
+              label="Max Heart Rate"
+              type="number"
+              variant="outlined"
+              color="primary"
+              onChange={(e) =>
+                setValues({ ...values, heartRate: e.target.value })
+              }
+            />
 
             {/* angina */}
             <CustomTooltip title="Angina" placement="left-start">
@@ -325,35 +250,15 @@ const Form = ({ submitFn }) => {
                   }
                 >
                   <option aria-label="None" value="" />
-                  <option value={0}>No</option>
-                  <option value={1}>Yes</option>
+                  {elements.angina.map((elem) => (
+                    <option value={elem.value}>{elem.label}</option>
+                  ))}
                 </Select>
               </FormControl>
             </CustomTooltip>
 
             {/* Thalassemia */}
-            <CustomTooltip placement="left-start"
-            title={
-              <React.Fragment>
-                <Typography variant="subtitle1" color="inherit">
-                  Thalassemia
-                </Typography>
-                <div>
-                  <span style={{display:'flex'}}>
-                  <Typography variant="subtitle2">
-                    1.Fixed Defect:
-                  </Typography>
-                  <Typography variant="body2">hello</Typography>
-                  </span>
-                  <span style={{display:'flex'}}>
-                  <Typography variant="subtitle2">
-                    2.Reversible Defect:
-                  </Typography>
-                  <Typography variant="body2">hello</Typography>
-                  </span>
-                </div>
-              </React.Fragment>
-            }>
+            <CustomTooltip placement="left-start" title={ThalassemiaOptions}>
               <FormControl
                 variant="outlined"
                 className={classes.FormControl}
@@ -372,21 +277,16 @@ const Form = ({ submitFn }) => {
                   }
                 >
                   <option aria-label="None" value="" />
-                  <option value={3}>Normal</option>
-                  <option value={6}>Fixed Defect</option>
-                  <option value={7}>Reversible Defect</option>
+                  {elements.thal.map((elem) => (
+                    <option value={elem.value}>{elem.label}</option>
+                  ))}
                 </Select>
               </FormControl>
             </CustomTooltip>
           </Grid>
         </Grid>
 
-        <Grid
-          container
-          alignItems="center"
-          className={classes.btnDiv}
-          justifyContent="right"
-        >
+        <Grid container alignItems="center" className={classes.btnDiv}>
           <Grid item xs={12} lg={6} />
           <Grid item xs={12} lg={6}>
             <Button

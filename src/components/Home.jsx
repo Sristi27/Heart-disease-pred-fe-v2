@@ -1,4 +1,4 @@
-import { Typography, Button, Grid, Box } from "@material-ui/core";
+import { Button, Grid, Box } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import heart2 from "./../images/heart2.jpeg";
@@ -6,46 +6,52 @@ import heart2 from "./../images/heart2.jpeg";
 const Home = () => {
   const [loginData, setLoginData] = useState("");
   useEffect(() => {
+    // check if user logged in already
     const data = localStorage.getItem("loginData");
     console.log(data);
     if (data) {
       setLoginData(JSON.parse(data));
+    } else {
+      setLoginData("");
     }
-  }, []);
+  }, [localStorage]);
+
   return (
-    <Box p={2}>
-      <Grid
-        container
-        justify="center"
-        alignItems="center"
-        style={{ marginTop: "40px" }}
-      >
+    <Box p={2} pt={4}>
+      <Grid container justify="center" alignItems="center">
         <Grid item sm={12} lg={6}>
           <img src={heart2} class="image" />
         </Grid>
         <Grid item sm={12} lg={6}>
           <h1 style={{ textDecoration: "underline" }}>Heart Seva</h1>
-          <div className="home-content">
-            Welcome to our Health Application.
-            <br />
-            This application is for predicting chances of you having a heart
-            disease. Enter your medical details and we will do a quick check and
-            tell you about your chances of having a heart disease. Go ahead to
-            the checkup section and avail our services.
-            <br />
-            <br />
-            <b>Stay Safe , Stay Healthy!</b>
-          </div>
+          <Box
+            style={{
+              width: "70%",
+              margin: "40px auto",
+              fontSize: "20px",
+              lineHeight: "1.8em",
+            }}
+          >
+            <Box mb={3}>Welcome to our Health Application.</Box>
+            <Box mb={3}>
+              This application is for predicting chances of you having a heart
+              disease. Enter your medical details and we will do a quick check
+              and tell you about your chances of having a heart disease. Go
+              ahead to the checkup section and avail our services.
+            </Box>
+            <Box>
+              <b>Stay Safe , Stay Healthy!</b>
+            </Box>
+          </Box>
           {loginData && (
             <Link
+              className="navbarLinks"
               to={{ pathname: `/checkup/${loginData._id}` }}
-              style={{ textDecoration: "none" }}
             >
               <Button
                 variant="outlined"
                 color="secondary"
                 size="large"
-                style={{ marginTop: "20px" }}
               >
                 Checkup
               </Button>

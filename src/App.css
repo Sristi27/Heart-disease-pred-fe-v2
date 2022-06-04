@@ -23,7 +23,6 @@
     align-items: center;
     height: 70vh;
     width:100%;
- 
 }
  
 .form::before{
@@ -50,10 +49,12 @@
 {
   height:400px;
 }
+
 .home-text
 {
   width: 50%;
 }
+
 .img-box
 {
   width:50%;
@@ -70,6 +71,18 @@
   justify-content: space-between;
 }
 
+.navbarBtn, .navbarBtn span
+{
+  color:white;
+  cursor:pointer;
+}
+
+.navbarLinks
+{
+  text-decoration: none;
+  cursor:pointer;
+}
+
 @media screen and (max-width:768px) {
   .image{
     height:200px;
@@ -79,6 +92,4 @@
   {
     height:200px
   }
-
-  
 }

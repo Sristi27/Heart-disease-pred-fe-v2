@@ -1,10 +1,28 @@
 import './App.css'; 
 import Checkup from './components/Checkup';
 import Navbar from './components/Navbar'
-import {Route,BrowserRouter} from 'react-router-dom'
+import {Route,BrowserRouter,Redirect,Switch} from 'react-router-dom'
 import Home from './components/Home'  
-import HistoryTable from './components/HistoryTable';
-import ProtectedRoute from './components/ProtectedRoute';
+import HistoryTable from './components/HistoryList';
+import { useEffect,useState } from 'react';
+
+// export const ProtectedRoute = ({ component: Component, ...restOfProps }) => {
+//   const [loginData,setLoginData] = useState({});
+//   useEffect = (()=>{
+//     if(localStorage.getItem("loginData")){
+//       setLoginData(localStorage.getItem("loginData"));
+//     }
+//   },[]);
+//   return (
+//     <Route
+//       {...restOfProps}
+//       render={(props) =>
+//         loginData ? <Component {...props} /> : <Redirect to="/" />
+//       }
+//     />
+//   );
+// }
+
 
 function App() {
 
@@ -12,10 +30,12 @@ function App() {
     <div className="App">
       <BrowserRouter>
       <Navbar/>
-      {/* <Auth/> */}
+      <Switch>
       <Route exact path="/"><Home/></Route>
-      <ProtectedRoute exact path="/checkup/:id"><Checkup/></ProtectedRoute>
-      <ProtectedRoute exact path="/history/:id"><HistoryTable/></ProtectedRoute>
+      <Route exact path="/checkup/:id"><Checkup/></Route>
+      <Route exact path="/history/:id"><HistoryTable/></Route>
+      <Route path="*"><Home/></Route>
+      </Switch>
       </BrowserRouter>
     </div>
   );

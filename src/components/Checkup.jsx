@@ -62,7 +62,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const Checkup = () => {
   const classes = useStyles();
-  const [openDialog, setOpenDialog] = React.useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
   const [open, setOpen] = useState(false);
  
   const [result, setResult] = useState({
@@ -80,13 +80,13 @@ const Checkup = () => {
         <Prediction 
         setOpenDialog={setOpenDialog} setOpen={setOpen}
         setResult={setResult}/>  
-      <Backdrop className={classes.backdrop} open={open}>
+       <Backdrop className={classes.backdrop} open={open}>
         <CircularProgress />
         <Typography variant="h5">Loading....</Typography>
       </Backdrop>
 
       {/* for result  */}
-      {result ? (
+      {result && (
         <Dialog
           open={openDialog}
           TransitionComponent={Transition}
@@ -113,8 +113,6 @@ const Checkup = () => {
             </Button>
           </DialogActions>
         </Dialog>
-      ) : (
-        <></>
       )}
     </Box>
   );
