@@ -8,10 +8,10 @@ import { CustomTooltip } from "./CustomTooltip";
 import { Stack } from "@mui/material";
 import "./../App.css";
 
-const Auth = ({onError,onSuccess}) => {
+const Auth = ({onError,onSuccess,setLoading}) => {
   const clientId = process.env.REACT_APP_OAUTH_CLIENT_ID;
   const backendURL = process.env.REACT_APP_BACKEND_URL;
-
+  
   const history = useHistory();
   const [loginData, setLoginData] = useState(
     localStorage.getItem("loginData")
@@ -25,6 +25,7 @@ const Auth = ({onError,onSuccess}) => {
 
   const handleLogin = async (googleData) => {
     console.log(googleData);
+    setLoading(true);
     await fetch(`${backendURL}/api/google-login`, {
       method: "POST",
       body: JSON.stringify({
@@ -36,10 +37,11 @@ const Auth = ({onError,onSuccess}) => {
     })
       .then((res) => res.json())
       .then((res) => {
-        localStorage.setItem("loginData", JSON.stringify(res.user)); 
-        onSuccess("User logged in successfully");
         setLoginData(res.user);
-        history.push('/');
+        localStorage.setItem("loginData", JSON.stringify(res.user)); 
+        setLoading(false);
+        onSuccess("User logged in successfully");
+        // history.push('/');
         //name,email,_id->mongo_user_id
       })
       .catch((err) => onError("Login Failed. Please try again."));
@@ -53,6 +55,7 @@ const Auth = ({onError,onSuccess}) => {
 
   return (
     <>
+   
       {loginData ? (
         <Stack direction="row" alignItems="center" spacing={2}>
           <Link className="navbarLinks" to={{ pathname: `/checkup/${loginData._id}` }}>

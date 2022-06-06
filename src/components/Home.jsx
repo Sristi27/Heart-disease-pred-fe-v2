@@ -4,11 +4,7 @@ import { Link } from "react-router-dom";
 import heart2 from "./../images/heart2.jpeg";
 
 const Home = () => {
-  const [loginData, setLoginData] = useState();
-  useEffect(() => {
-    setLoginData(localStorage.getItem('loginData'));
-  },[]);
-
+  const [loginData, setLoginData] = useState(localStorage.getItem('loginData'));
   return (
     <Box p={2} pt={4}>
       <Grid container justify="center" alignItems="center">
