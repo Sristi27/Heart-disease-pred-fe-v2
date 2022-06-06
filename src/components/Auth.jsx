@@ -19,9 +19,8 @@ const Auth = ({onError,onSuccess}) => {
       : ""  //not logged in
   );
 
-  const handleFailure = (result) => {
-    console.log(result);
-    alert(result);
+  const handleFailure = (err) => {
+    alert(err.details);
   };
 
   const handleLogin = async (googleData) => {
