@@ -3,10 +3,10 @@ import { Alert } from "@mui/material";
 import React, { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 
-const Snackbar = ({ sev, msg, clearMsg }) => {
+const Snackbar = ({ sev, msg, clearMsg, widthProp }) => {
   const [open, setOpen] = useState(true);
   return (
-    <div style={{ width:"35%", margin: '0 auto'}}>
+    <div style={{ width:`${widthProp ? widthProp : '35%'}`, margin: '0 auto'}}>
       <Collapse in={open}>
         <Alert
           variant="filled"

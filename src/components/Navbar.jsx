@@ -15,6 +15,7 @@ export default function Navbar() {
         <Toolbar style={{ display: "flex", justifyContent: "space-between" }}>
           <Link to="/" className="navbarLinks">
             <img
+            alt="Heart Seva Logo"
               src={navLogo}
               height="58px"
               width="58px"

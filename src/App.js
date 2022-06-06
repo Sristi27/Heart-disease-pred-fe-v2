@@ -1,10 +1,9 @@
 import './App.css'; 
 import Checkup from './components/Checkup';
 import Navbar from './components/Navbar'
-import {Route,BrowserRouter,Redirect,Switch} from 'react-router-dom'
+import {Route,BrowserRouter,Switch} from 'react-router-dom'
 import Home from './components/Home'  
 import HistoryTable from './components/HistoryList';
-import { useEffect,useState } from 'react';
 
 // export const ProtectedRoute = ({ component: Component, ...restOfProps }) => {
 //   const [loginData,setLoginData] = useState({});

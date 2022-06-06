@@ -9,8 +9,7 @@ import { Stack } from "@mui/material";
 import "./../App.css"
 
 const Auth = ({onError,onSuccess}) => {
-  const clientId =
-    "893518889771-8rrmcfsksof02js275v6qosubdjqufun.apps.googleusercontent.com";
+  const clientId = "893518889771-8rrmcfsksof02js275v6qosubdjqufun.apps.googleusercontent.com";
 
    
   const history = useHistory();
@@ -40,6 +39,7 @@ const Auth = ({onError,onSuccess}) => {
         localStorage.setItem("loginData", JSON.stringify(res.user)); 
         onSuccess("User logged in successfully");
         setLoginData(res.user);
+        history.push('/');
         //name,email,_id->mongo_user_id
       })
       .catch((err) => onError("Login Failed. Please try again."));
@@ -48,7 +48,7 @@ const Auth = ({onError,onSuccess}) => {
   const handleLogout = () => {
     localStorage.removeItem("loginData");
     setLoginData(null);
-    history.push("/");
+    history.push('/');
   };
 
   return (
@@ -62,7 +62,7 @@ const Auth = ({onError,onSuccess}) => {
             <Button className="navbarBtn">History</Button>
           </Link>
           <CustomTooltip title="Logout">
-          <IconButton aria-label="login" onClick={() => handleLogout()} size="medium">
+          <IconButton aria-label="logout" onClick={() => handleLogout()} size="medium">
             <LogoutIcon className="navbarBtn"/>
           </IconButton>
           </CustomTooltip>

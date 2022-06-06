@@ -14,68 +14,68 @@ export const elements =
     ],
     thal:[
         {
-            label:'Normal',
-            desc:'hello',
-            value:3
-        },
-        {
             label:'Fixed Defect',
             desc:'hello',
-            value:6
+            value:1
+        },
+        {
+            label:'Normal',
+            desc:'hello',
+            value:2
         },
         {
             label:'Reversible Defect',
             desc:'hello',
-            value:7
+            value:3
         }
     ],
     ecg:[
         {
             label:'Normal',
             desc:'hello',
-            value:0
+            value:1
         },
         {
             label:'Having ST-T wave abnormality',
             desc:'hello',
-            value:1
+            value:2
         },
         {
             label:'Probable or definite left ventricular hypertrophy',
             desc:'hello',
-            value:2
+            value:0
         }
     ],
     sugar:[
         {
             label:'Yes',
-            desc:'Less than 120 mg/dl',
-            value:0
+            desc:'Greater than 120 mg/dl',
+            value:1
         },
         {
             label:'No',
-            desc:'Greater than 120 mg/dl',
-            value:1
+            desc:'Lesser than 120 mg/dl',
+            value:0
         }
     ],
     chestPain:[
         {
-            label:'Typical Angina',
+            label:'Asymptomatic',
             desc:'hello',
             value:0
         },
         {
-            label:'Atypical Angina',
+            label:'Typical Angina',
             desc:'hello',
             value:1
         },
         {
-            label:'Non Anginal Pain',
+            label:'Atypical Angina',
             desc:'hello',
             value:2
         },
         {
-            label:'Asymptomatic',
+            label:'Non Anginal Pain',
             desc:'hello',
             value:3
         }
@@ -83,11 +83,11 @@ export const elements =
     gender:[
         {
             label:'Male',
-            value:0
+            value:1
         },
         {
             label:'Female',
-            value:1
+            value:0
         }
     ]
 }

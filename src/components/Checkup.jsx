@@ -1,70 +1,34 @@
 import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { 
-  Button, 
-  Backdrop, 
-  Dialog, 
+import {
+  Button,
+  Backdrop,
+  Stack,
+  Dialog,
   Box,
   DialogActions,
-  DialogContent, 
+  DialogContent,
   DialogContentText,
   Typography,
-  DialogTitle, 
-  Grid,
+  DialogTitle,
   CircularProgress,
   Slide,
-} from "@material-ui/core";
-import resultimg from "./../images/resultimg.jpeg";
+} from "@mui/material";
+import resultImg from "./../images/resultimg.jpeg";
 import Prediction from "./Prediction";
-
-const useStyles = makeStyles((theme) => ({
-  inputs: {
-    width: "85%",
-    margin: "0 auto",
-    marginBottom:'8px'
-  },
-  root:
-{
-  display:'flex',
-  alignItems:'center'
-},
-div:
-{
-  width:"100%",
-  flexGrow:1
-},
-  form: {
-    display: "flex",
-    flexDirection: "column",
-    width: "70%",
-  },
-  image: {
-    width: "40%",
-  },
-  formControl: {
-    marginTop: theme.spacing(2),
-    minWidth: 60,
-  },
-  formControlLabel: {
-    marginTop: theme.spacing(1),
-  },
-  backdrop: {
-    zIndex: theme.zIndex.drawer + 1,
-    color: '#fff',
-  },
-}));
+import { useHistory, useParams } from "react-router-dom";
+import Snackbar from "./Snackbar";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-
-
 const Checkup = () => {
-  const classes = useStyles();
+  const history = useHistory();
   const [openDialog, setOpenDialog] = useState(false);
   const [open, setOpen] = useState(false);
- 
+  const [successMsg, setSuccessMsg] = useState("");
+  const {id} = useParams();
+  
   const [result, setResult] = useState({
     title: "",
     content: "",
@@ -73,16 +37,22 @@ const Checkup = () => {
 
   const handleClose = () => {
     setOpenDialog(false);
+    history.push(`/history/${id}`);
   };
- 
+
   return (
-    <Box pt={2} pb={2}> 
-        <Prediction 
-        setOpenDialog={setOpenDialog} setOpen={setOpen}
-        setResult={setResult}/>  
-       <Backdrop className={classes.backdrop} open={open}>
-        <CircularProgress />
-        <Typography variant="h5">Loading....</Typography>
+    <Box pt={2} pb={2}>
+      <Prediction
+        setSuccessMsg={setSuccessMsg}
+        setOpenDialog={setOpenDialog}
+        setOpen={setOpen}
+        setResult={setResult}
+      />
+      <Backdrop sx={{ color: "white" }} open={open}>
+        <Stack direction="row" spacing={2}>
+          <CircularProgress />
+          <Typography variant="h6">Loading....</Typography>
+        </Stack>
       </Backdrop>
 
       {/* for result  */}
@@ -97,13 +67,24 @@ const Checkup = () => {
           aria-describedby="alert-dialog-slide-description"
         >
           <DialogTitle id="alert-dialog-slide-title">
-            <h3>{result.title}</h3>
+            <div style={{width:'100%'}}>
+              {successMsg !== "" && (
+                <Snackbar
+                  sev="success"
+                  msg={successMsg}
+                  clearMsg={setSuccessMsg}
+                  widthProp="100%"
+                />
+              )}
+              <h3>{result.title}</h3>
+            </div>
           </DialogTitle>
           <DialogContent>
             <DialogContentText>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 {result.content}
-                <img src={resultimg} width="320px" height="220px" />
+                <img alt="Dialog" 
+                src={resultImg} width="320px" height="220px" />
               </div>
             </DialogContentText>
           </DialogContent>

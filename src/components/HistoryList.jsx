@@ -1,30 +1,20 @@
 import React, { useEffect, useState } from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import { styled } from "@mui/material/styles";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 import CloseIcon from "@mui/icons-material/Close";
-import { Box, Dialog, Typography } from "@material-ui/core";
 import { useParams } from "react-router-dom";
+import { Stack, tableCellClasses, styled } from "@mui/material";
 import {
-  Button,
-  Backdrop,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
+  Button, Box, Dialog, Typography,
+  Backdrop, Table,
+  DialogActions,TableContainer, Paper, TableCell,
+  DialogContent,TableHead, TableBody,
+  DialogContentText, TableRow,
+  DialogTitle, IconButton,
   CircularProgress,
-  Slide,
 } from "@material-ui/core";
 import moment from "moment";
 import { Link } from "react-router-dom";
-import { IconButton, Stack } from "@mui/material";
-import HistoryDetail from "./HistoryDetail";
 import { elements } from "./FormElements/contents";
+import HistoryDetail from "./HistoryDetail";
 import Snackbar from "./Snackbar";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -43,12 +33,9 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
 
 const HistoryList = () => {
-  const id = useParams().id;
+  const {id} = useParams();
 
   const [isLoading, setIsLoading] = useState(true);
   const [historyData, setHistoryData] = useState([]);
@@ -76,7 +63,7 @@ const HistoryList = () => {
         });
     };
     fetchHistory();
-  }, []);
+  }, [id]);
 
   return (
     <Box mt={5}>
@@ -91,7 +78,7 @@ const HistoryList = () => {
           </Stack>
         </Backdrop>
       )}
-      {!isLoading && historyData.length == 0 && (
+      {!isLoading && historyData.length === 0 && (
         <Stack mt={3} direction="row" spacing={3} justifyContent="center" alignItems="center">
           <Typography variant="h5">
             No checkup history yet
@@ -140,7 +127,7 @@ const HistoryList = () => {
                       }}
                     >
                       <StyledTableCell component="th" scope="row">
-                        {moment(row.date).format("DD MMM,YYYY")}
+                        {moment(row.date).format("DD MMM,YYYY h:mm a")}
                       </StyledTableCell>
                       <StyledTableCell>{row.age}</StyledTableCell>
                       <StyledTableCell>
@@ -162,7 +149,7 @@ const HistoryList = () => {
                       <StyledTableCell>{row.cholestrol} mg/dl</StyledTableCell>
                       <StyledTableCell>
                         {row.result === "No" ? (
-                          "Negative"
+                          <b style={{ color: "green", fontWeight:'normal'}}>Negative</b>
                         ) : (
                           <b style={{ color: "red" }}>Positive</b>
                         )}
@@ -192,7 +179,6 @@ const HistoryList = () => {
       {current && (
         <Dialog
           open={openDialog}
-          TransitionComponent={Transition}
           keepMounted
           maxWidth="lg"
           onClose={handleClose}
@@ -211,7 +197,7 @@ const HistoryList = () => {
               <Stack spacing={3} direction="row">
                 <Typography variant="h5">Date - </Typography>
                 <Typography variant="h5">
-                  {moment(current.date).format("DD MMM,YYYY")}
+                  {moment(current.date).format("DD MMM,YYYY h:mm a")}
                 </Typography>
               </Stack>
               <IconButton

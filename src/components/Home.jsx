@@ -4,23 +4,16 @@ import { Link } from "react-router-dom";
 import heart2 from "./../images/heart2.jpeg";
 
 const Home = () => {
-  const [loginData, setLoginData] = useState("");
+  const [loginData, setLoginData] = useState();
   useEffect(() => {
-    // check if user logged in already
-    const data = localStorage.getItem("loginData");
-    console.log(data);
-    if (data) {
-      setLoginData(JSON.parse(data));
-    } else {
-      setLoginData("");
-    }
-  }, [localStorage]);
+    setLoginData(localStorage.getItem('loginData'));
+  },[]);
 
   return (
     <Box p={2} pt={4}>
       <Grid container justify="center" alignItems="center">
         <Grid item sm={12} lg={6}>
-          <img src={heart2} class="image" />
+          <img src={heart2} class="image" alt="Home Screen" />
         </Grid>
         <Grid item sm={12} lg={6}>
           <h1 style={{ textDecoration: "underline" }}>Heart Seva</h1>
@@ -46,7 +39,7 @@ const Home = () => {
           {loginData && (
             <Link
               className="navbarLinks"
-              to={{ pathname: `/checkup/${loginData._id}` }}
+              to={{ pathname: `/checkup/${JSON.parse(loginData)._id}` }}
             >
               <Button
                 variant="outlined"

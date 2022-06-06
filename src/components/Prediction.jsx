@@ -4,36 +4,35 @@ import { urlList } from "../utils/urlLinks";
 import Form from "./Form";
 import Snackbar from "./Snackbar";
 
-const Prediction = ({ setOpenDialog, setOpen, setResult }) => {
+const Prediction = ({ setOpenDialog, setOpen, setResult, setSuccessMsg }) => {
   const [errorMsg, setErrorMsg] = useState("");
-  const [successMsg, setSuccessMsg] = useState("");
 
   const createForm = (formData, values) => {
-    formData.append("age", values.age);
-    formData.append("sex", values.sex);
-    formData.append("cp", values.chestPainType);
-    formData.append("trestbps", values.restingBloodPressure);
-    formData.append("chol", values.cholestrol);
-    formData.append("fbs", values.fastingBloodSugar);
-    formData.append("restecg", values.ecg);
-    formData.append("thalach", values.heartRate);
-    formData.append("exang", values.angina);
-    formData.append("thal", values.thal);
+    formData.append("age", parseInt(values.age));
+    formData.append("sex", parseInt(values.sex));
+    formData.append("cp", parseInt(values.chestPainType));
+    formData.append("trestbps", parseInt(values.restingBloodPressure));
+    formData.append("chol", parseInt(values.cholestrol));
+    formData.append("fbs", parseInt(values.fastingBloodSugar));
+    formData.append("restecg", parseInt(values.ecg));
+    formData.append("thalach", parseInt(values.heartRate));
+    formData.append("exang", parseInt(values.angina));
+    formData.append("thal", parseInt(values.thal));
   };
 
   const medCheckupData = (values, result) =>
     JSON.stringify({
       email: JSON.parse(localStorage.getItem("loginData")).email,
-      age: values.age,
-      sex: values.sex,
-      chestPainType: values.chestPainType,
-      pressure: values.restingBloodPressure,
-      cholestrol: values.cholestrol,
-      sugar: values.fastingBloodSugar,
-      ecg: values.ecg,
-      heartRate: values.heartRate,
-      angina: values.angina,
-      thal: values.thal,
+      age: parseInt(values.age),
+      sex: parseInt(values.sex),
+      chestPainType: parseInt(values.chestPainType),
+      pressure: parseInt(values.restingBloodPressure),
+      cholestrol: parseInt(values.cholestrol),
+      sugar: parseInt(values.fastingBloodSugar),
+      ecg: parseInt(values.ecg),
+      heartRate: parseInt(values.heartRate),
+      angina: parseInt(values.angina),
+      thal: parseInt(values.thal),
       result: result,
     });
 
@@ -57,7 +56,7 @@ const Prediction = ({ setOpenDialog, setOpen, setResult }) => {
     })
       .then((res) => res.json())
       .then(async (res) => {
-        console.log(res); // res obj = {message,value}
+        // console.log(res); // res obj = {message,value}
         //prediction dialog set to open
         if (res.value === "Yes") {
           await setResult(RiskData);
@@ -81,7 +80,7 @@ const Prediction = ({ setOpenDialog, setOpen, setResult }) => {
           .catch((err) => setErrorMsg("Oops! Your checkup details could not be saved"));
       })
       .catch((err) => {
-        setErrorMsg("Sorry! The prediction could not be completed.");
+        setErrorMsg(errorData);
       })
       .finally(() => {
         setOpen(false); //loading false
@@ -91,7 +90,6 @@ const Prediction = ({ setOpenDialog, setOpen, setResult }) => {
   return (
     <>
       {errorMsg !== "" && <Snackbar sev="error" msg={errorMsg} clearMsg={setErrorMsg} />}
-      {successMsg !== "" && <Snackbar sev="success" msg={successMsg} clearMsg={setSuccessMsg} />}
       <Form submitFn={handleSubmit} />
     </>
   );
