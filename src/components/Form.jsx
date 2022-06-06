@@ -14,6 +14,8 @@ import { elements } from "./FormElements/contents";
 import ThalassemiaOptions from "./TooltipOptions/ThalassemiaOptions";
 import ChestPainOptions from "./TooltipOptions/ChestPainOptions";
 import ECGOptions from "./TooltipOptions/ECGOptions";
+import { cholDesc, excerciseInducedAnginaDesc, HeartRateDesc, sugarDesc } from "./TooltipOptions/Desc";
+import BloodPressureOptions from "./TooltipOptions/BloodPressureOptions";
 
 const useStyles = makeStyles((theme) => ({
   inputs: {
@@ -94,6 +96,10 @@ const Form = ({ submitFn }) => {
             </FormControl>
 
             {/* heartrate */}
+            <CustomTooltip placement="left-start" title={<Typography
+            variant="caption">
+              {HeartRateDesc}
+            </Typography>}>
             <TextField
               required
               className={classes.inputs}
@@ -109,8 +115,11 @@ const Form = ({ submitFn }) => {
                 setValues({ ...values, heartRate: e.target.value })
               }
             />
+            </CustomTooltip>
+          
             {/* presure */}
-            <TextField
+           <CustomTooltip title={BloodPressureOptions} placement="right-start">
+           <TextField
               className={classes.inputs}
               style={{ marginBottom:'16px' }}
               value={values.restingBloodPressure}
@@ -125,9 +134,14 @@ const Form = ({ submitFn }) => {
                 setValues({ ...values, restingBloodPressure: e.target.value })
               }
             />
+           </CustomTooltip>
 
             {/* chol */}
-            <TextField
+            <CustomTooltip title={
+            <Typography variant="caption"
+            placement="right-start"
+            > {cholDesc} </Typography>}>
+              <TextField
               style={{ marginBottom:'16px' }}
               className={classes.inputs}
               value={values.cholestrol}
@@ -142,10 +156,15 @@ const Form = ({ submitFn }) => {
                 setValues({ ...values, cholestrol: e.target.value })
               }
             />
+            </CustomTooltip>
+            
           </Grid>
 
           {/* sugar */}
           <Grid item xs={12} lg={6}>
+            <CustomTooltip 
+            placement="left-start"
+            title={<Typography variant="caption">{sugarDesc} </Typography>}>
             <FormControl
               variant="outlined"
               className={classes.FormControl}
@@ -169,6 +188,7 @@ const Form = ({ submitFn }) => {
                 ))}
               </Select>
             </FormControl>
+            </CustomTooltip>
 
             {/* ecg  */}
             <CustomTooltip placement="left-start" title={ECGOptions}>
@@ -198,7 +218,7 @@ const Form = ({ submitFn }) => {
             </CustomTooltip>
 
             {/* chest pain  */}
-            <CustomTooltip placement="right-start" title={ChestPainOptions}>
+            <CustomTooltip placement="left-start" title={ChestPainOptions}>
               <FormControl
                 required
                 variant="outlined"
@@ -225,7 +245,9 @@ const Form = ({ submitFn }) => {
             </CustomTooltip>
 
             {/* angina */}
-            <CustomTooltip title="Angina" placement="left-start">
+            <CustomTooltip title={<Typography variant="caption">
+             { excerciseInducedAnginaDesc}
+            </Typography>} placement="left-start">
               <FormControl
                 variant="outlined"
                 className={classes.FormControl}

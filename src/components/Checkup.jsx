@@ -1,16 +1,12 @@
 import React, { useState } from "react";
 import {
   Button,
-  Backdrop,
-  Stack,
   Dialog,
   Box,
   DialogActions,
   DialogContent,
   DialogContentText,
-  Typography,
   DialogTitle,
-  CircularProgress,
   Slide,
 } from "@mui/material";
 import resultImg from "./../images/resultimg.jpeg";
@@ -50,6 +46,7 @@ const Checkup = () => {
         setResult={setResult}
       />
       <Loader open={open} />
+      
       {/* for result  */}
       {result && (
         <Dialog
