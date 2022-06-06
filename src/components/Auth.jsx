@@ -6,12 +6,12 @@ import { useHistory } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { CustomTooltip } from "./CustomTooltip";
 import { Stack } from "@mui/material";
-import "./../App.css"
+import "./../App.css";
 
 const Auth = ({onError,onSuccess}) => {
-  const clientId = "893518889771-8rrmcfsksof02js275v6qosubdjqufun.apps.googleusercontent.com";
+  const clientId = process.env.REACT_APP_OAUTH_CLIENT_ID;
+  const backendURL = process.env.REACT_APP_BACKEND_URL;
 
-   
   const history = useHistory();
   const [loginData, setLoginData] = useState(
     localStorage.getItem("loginData")
@@ -25,7 +25,7 @@ const Auth = ({onError,onSuccess}) => {
 
   const handleLogin = async (googleData) => {
     console.log(googleData);
-    await fetch("http://localhost:5000/api/google-login", {
+    await fetch(`${backendURL}/api/google-login`, {
       method: "POST",
       body: JSON.stringify({
         token: googleData.tokenId,

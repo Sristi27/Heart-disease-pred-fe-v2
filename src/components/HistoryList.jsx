@@ -16,6 +16,8 @@ import { Link } from "react-router-dom";
 import { elements } from "./FormElements/contents";
 import HistoryDetail from "./HistoryDetail";
 import Snackbar from "./Snackbar";
+import { fontWeight } from "@mui/system";
+import Loader from "./Loader";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -36,6 +38,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 const HistoryList = () => {
   const {id} = useParams();
+  const backendURL = process.env.REACT_APP_BACKEND_URL;
+  console.log(backendURL)
 
   const [isLoading, setIsLoading] = useState(true);
   const [historyData, setHistoryData] = useState([]);
@@ -47,20 +51,16 @@ const HistoryList = () => {
 
   useEffect(() => {
     const fetchHistory = async () => {
-      await fetch(`http://localhost:5000/getMedicalData/${id}`, {
+      await fetch(`${backendURL}/getMedicalData/${id}`, {
         method: "GET",
       })
         .then((res) => res.json())
         .then((res) => {
+          console.log(res);
           setHistoryData(res.history);
         })
-        .catch((err) => {
-          console.log(err);
-          setErrorMsg("Sorry! We could not fetch your checkup history.");
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
+        .catch(() => setErrorMsg("Sorry! We could not fetch your checkup history."))
+        .finally(() => setIsLoading(false))
     };
     fetchHistory();
   }, [id]);
@@ -70,14 +70,7 @@ const HistoryList = () => {
       {errorMsg !== "" && (
         <Snackbar sev="error" msg={errorMsg} clearMsg={setErrorMsg} />
       )}
-      {isLoading && (
-        <Backdrop sx={{ color: "white" }} open={isLoading}>
-          <Stack direction="row" spacing={2}>
-            <CircularProgress />
-            <Typography variant="h6">Loading....</Typography>
-          </Stack>
-        </Backdrop>
-      )}
+      {isLoading && <Loader open={isLoading} />}
       {!isLoading && historyData.length === 0 && (
         <Stack mt={3} direction="row" spacing={3} justifyContent="center" alignItems="center">
           <Typography variant="h5">

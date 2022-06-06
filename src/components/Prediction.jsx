@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { errorData, NoRiskData, RiskData } from "../utils/resultData";
-import { urlList } from "../utils/urlLinks";
 import Form from "./Form";
 import Snackbar from "./Snackbar";
 
 const Prediction = ({ setOpenDialog, setOpen, setResult, setSuccessMsg }) => {
   const [errorMsg, setErrorMsg] = useState("");
+  const backendURL = process.env.REACT_APP_BACKEND_URL;
+  const modelURL = process.env.REACT_APP_MODEL_URL;
 
   const createForm = (formData, values) => {
     formData.append("age", parseInt(values.age));
@@ -46,26 +47,29 @@ const Prediction = ({ setOpenDialog, setOpen, setResult, setSuccessMsg }) => {
     }
     setOpen(true); //loading = true // loading material ui
     setOpenDialog(false);
+
+    //create body
     var formData = new FormData();
     createForm(formData, values); // form created
     // values from Form state - all input values
     // predicturl -> ml model api call
-    fetch(urlList.predictUrl, {
+
+    fetch(`${modelURL}`, {
       method: "POST",
       body: formData,
     })
       .then((res) => res.json())
       .then(async (res) => {
-        // console.log(res); // res obj = {message,value}
+        
         //prediction dialog set to open
         if (res.value === "Yes") {
           await setResult(RiskData);
         } else if (res.value === "No") {
           await setResult(NoRiskData);
         }
-        setOpenDialog(true);
-        //mongo db save korar api
-        await fetch(urlList.saveMedUrl, {
+        
+        //save in mongo db
+        await fetch(`${backendURL}/saveMedicalData`, {
           method: "POST",
           body: medCheckupData(values, res.value),
           headers: {
@@ -75,6 +79,7 @@ const Prediction = ({ setOpenDialog, setOpen, setResult, setSuccessMsg }) => {
           .then((res) => res.json())
           .then((res) => {
             console.log(res); // saved ya non saved
+            setOpenDialog(true);
             setSuccessMsg("Checkup data saved successfully");
           })
           .catch((err) => setErrorMsg("Oops! Your checkup details could not be saved"));

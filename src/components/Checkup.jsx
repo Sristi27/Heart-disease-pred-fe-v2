@@ -17,6 +17,7 @@ import resultImg from "./../images/resultimg.jpeg";
 import Prediction from "./Prediction";
 import { useHistory, useParams } from "react-router-dom";
 import Snackbar from "./Snackbar";
+import Loader from "./Loader";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -48,13 +49,7 @@ const Checkup = () => {
         setOpen={setOpen}
         setResult={setResult}
       />
-      <Backdrop sx={{ color: "white" }} open={open}>
-        <Stack direction="row" spacing={2}>
-          <CircularProgress />
-          <Typography variant="h6">Loading....</Typography>
-        </Stack>
-      </Backdrop>
-
+      <Loader open={open} />
       {/* for result  */}
       {result && (
         <Dialog
