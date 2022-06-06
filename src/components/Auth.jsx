@@ -20,6 +20,7 @@ const Auth = ({onError,onSuccess}) => {
   );
 
   const handleFailure = (result) => {
+    console.log(result);
     alert(result);
   };
 

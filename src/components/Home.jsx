@@ -13,7 +13,7 @@ const Home = () => {
     <Box p={2} pt={4}>
       <Grid container justify="center" alignItems="center">
         <Grid item sm={12} lg={6}>
-          <img src={heart2} class="image" alt="Home Screen" />
+          <img src={heart2} className="image" alt="Home Screen" />
         </Grid>
         <Grid item sm={12} lg={6}>
           <h1 style={{ textDecoration: "underline" }}>Heart Seva</h1>
