@@ -10,6 +10,11 @@ const Home = ({ loading }) => {
   const [loginData, setLoginData] = useState(localStorage.getItem("loginData"));
   const [errorMsg, setErrorMsg] = useState();
   const history = useHistory();
+
+  useEffect(()=>{
+    setLoginData(localStorage.getItem('loginData'));
+  },[]);
+
   const checkupClick = () => {
     if (localStorage.getItem("loginData"))
       history.push(`/checkup/${JSON.parse(localStorage.getItem("loginData"))._id}`);
@@ -52,7 +57,7 @@ const Home = ({ loading }) => {
                   <b>Stay Safe , Stay Healthy!</b>
                 </Box>
               </Box>
-              {localStorage.getItem("loginData") && (
+              {loginData && (
                 <Button
                   variant="outlined"
                   color="secondary"
