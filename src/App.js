@@ -10,14 +10,11 @@ import { Redirect } from "react-router-dom";
 function App() {
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(localStorage.getItem("login-data"));
-  useEffect(() => {
-    console.log(localStorage.getItem("loginData"))
-    setUser(localStorage.getItem("loginData"));
-  }, []);
+
   return (
     <div className="App">
       <BrowserRouter>
-        <Navbar setLoading={setLoading} />
+        <Navbar setLoading={setLoading} setUser={setUser} />
         <Switch>
           <Route exact path="/">
             <Home loading={loading} />

@@ -5,7 +5,7 @@ import Auth from "./Auth";
 import navLogo from "./../images/navLogo.png";
 import SnackbarElem from "./Snackbar";
 
-export default function Navbar({setLoading}) {
+export default function Navbar({setLoading,setUser}) {
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
   
@@ -24,6 +24,7 @@ export default function Navbar({setLoading}) {
           </Link>
           <Auth
             onError={setErrorMsg}
+            setUser={setUser}
             onSuccess={setSuccessMsg}
             setLoading={setLoading}
           />

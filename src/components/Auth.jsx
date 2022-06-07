@@ -8,7 +8,7 @@ import { CustomTooltip } from "./CustomTooltip";
 import { Stack } from "@mui/material";
 import "./../App.css";
 
-const Auth = ({onError,onSuccess,setLoading}) => {
+const Auth = ({onError,onSuccess,setLoading,setUser}) => {
   const clientId = process.env.REACT_APP_OAUTH_CLIENT_ID;
   const backendURL = process.env.REACT_APP_BACKEND_URL;
   
@@ -37,6 +37,7 @@ const Auth = ({onError,onSuccess,setLoading}) => {
       .then((res) => res.json())
       .then((res) => {
         setLoginData(res.user);
+        setUser(res.user);
         localStorage.setItem("loginData", JSON.stringify(res.user)); 
         setLoading(false);
         onSuccess("User logged in successfully");
