@@ -20,7 +20,7 @@ const Auth = ({onError,onSuccess,setLoading}) => {
   );
 
   const handleFailure = (err) => {
-    alert(err.details);
+    onError(err.details);
   };
 
   const handleLogin = async (googleData) => {
@@ -40,10 +40,9 @@ const Auth = ({onError,onSuccess,setLoading}) => {
         localStorage.setItem("loginData", JSON.stringify(res.user)); 
         setLoading(false);
         onSuccess("User logged in successfully");
-        history.push('/');
         //name,email,_id->mongo_user_id
       })
-      .catch((err) => onError("Login Failed. Please try again."));
+      .catch(() => onError("Login Failed. Please try again."));
   };
 
   const handleLogout = () => {

@@ -20,7 +20,6 @@ const Home = ({ loading }) => {
       history.push(`/checkup/${JSON.parse(localStorage.getItem("loginData"))._id}`);
     else {
       setErrorMsg("Please login first");
-      // history.push('/');
     }
   };
   return (
