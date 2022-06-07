@@ -1,5 +1,5 @@
 import GoogleLogin from "react-google-login";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button, IconButton } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
@@ -8,16 +8,18 @@ import { CustomTooltip } from "./CustomTooltip";
 import { Stack } from "@mui/material";
 import "./../App.css";
 
-const Auth = ({onError,onSuccess,setLoading,setUser}) => {
+const Auth = ({onError,onSuccess,setLoading,setUser,user}) => {
   const clientId = process.env.REACT_APP_OAUTH_CLIENT_ID;
   const backendURL = process.env.REACT_APP_BACKEND_URL;
   
   const history = useHistory();
-  const [loginData, setLoginData] = useState(
-    localStorage.getItem("loginData")
-      ? JSON.parse(localStorage.getItem("loginData")) //lgged in
-      : ""  //not logged in
-  );
+
+  useEffect(()=>{
+    if(localStorage.getItem('loginData'))
+    {
+      setUser(JSON.parse(localStorage.getItem("loginData")));
+    }
+  },[]);
 
   const handleFailure = (err) => {
     onError(err.details);
@@ -36,7 +38,6 @@ const Auth = ({onError,onSuccess,setLoading,setUser}) => {
     })
       .then((res) => res.json())
       .then((res) => {
-        setLoginData(res.user);
         setUser(res.user);
         localStorage.setItem("loginData", JSON.stringify(res.user)); 
         setLoading(false);
@@ -49,7 +50,7 @@ const Auth = ({onError,onSuccess,setLoading,setUser}) => {
   const handleLogout = () => {
     setLoading(true);
     localStorage.removeItem("loginData");
-    setLoginData(null);
+    setUser();
     setLoading(false);
     history.push('/');
     onSuccess("User logged out successfully");
@@ -57,12 +58,12 @@ const Auth = ({onError,onSuccess,setLoading,setUser}) => {
 
   return (
     <>
-      {loginData ? (
+      {user ? (
         <Stack direction="row" alignItems="center" spacing={2}>
-          <Link className="navbarLinks" to={{ pathname: `/checkup/${loginData._id}` }}>
+          <Link className="navbarLinks" to={{ pathname: `/checkup/${user._id}` }}>
             <Button className="navbarBtn">Checkup</Button>
           </Link>
-          <Link className="navbarLinks" to={{ pathname: `/history/${loginData._id}` }}>
+          <Link className="navbarLinks" to={{ pathname: `/history/${user._id}` }}>
             <Button className="navbarBtn">History</Button>
           </Link>
           <CustomTooltip title="Logout">

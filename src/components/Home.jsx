@@ -6,18 +6,13 @@ import heart2 from "./../images/heart2.jpeg";
 import Loader from "./Loader";
 import SnackbarElem from "./Snackbar";
 
-const Home = ({ loading }) => {
-  const [loginData, setLoginData] = useState(localStorage.getItem("loginData"));
+const Home = ({ loading, user }) => {
   const [errorMsg, setErrorMsg] = useState();
   const history = useHistory();
 
-  useEffect(()=>{
-    setLoginData(localStorage.getItem('loginData'));
-  },[]);
-
   const checkupClick = () => {
     if (localStorage.getItem("loginData"))
-      history.push(`/checkup/${JSON.parse(localStorage.getItem("loginData"))._id}`);
+      history.push(`/checkup/${user._id}`);
     else {
       setErrorMsg("Please login first");
     }
@@ -56,7 +51,7 @@ const Home = ({ loading }) => {
                   <b>Stay Safe , Stay Healthy!</b>
                 </Box>
               </Box>
-              {loginData && (
+              {user && (
                 <Button
                   variant="outlined"
                   color="secondary"

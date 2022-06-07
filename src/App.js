@@ -9,15 +9,15 @@ import { Redirect } from "react-router-dom";
 
 function App() {
   const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState(localStorage.getItem("login-data"));
+  const [user, setUser] = useState();
 
   return (
     <div className="App">
       <BrowserRouter>
-        <Navbar setLoading={setLoading} setUser={setUser} />
+        <Navbar setLoading={setLoading} setUser={setUser} user={user}/>
         <Switch>
           <Route exact path="/">
-            <Home loading={loading} />
+            <Home loading={loading} user={user} />
           </Route>
           {user && (
             <>
