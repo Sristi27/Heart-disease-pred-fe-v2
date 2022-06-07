@@ -78,7 +78,7 @@ const Prediction = ({ setOpenDialog, setOpen, setResult, setSuccessMsg }) => {
         })
           .then((res) => res.json())
           .then((res) => {
-            console.log(res); // saved ya non saved
+            // console.log(res); // saved ya non saved
             setOpenDialog(true);
             setSuccessMsg("Checkup data saved successfully");
           })

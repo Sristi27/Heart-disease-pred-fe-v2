@@ -1,7 +1,7 @@
 import GoogleLogin from "react-google-login";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Button, IconButton } from "@material-ui/core";
+import { Avatar, Button, IconButton } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { CustomTooltip } from "./CustomTooltip";
@@ -13,6 +13,8 @@ const Auth = ({onError,onSuccess,setLoading,setUser,user}) => {
   const backendURL = process.env.REACT_APP_BACKEND_URL;
   
   const history = useHistory();
+
+  const [userImg,setUserImg] = useState();
 
   useEffect(()=>{
     if(localStorage.getItem('loginData'))
@@ -26,6 +28,7 @@ const Auth = ({onError,onSuccess,setLoading,setUser,user}) => {
   };
 
   const handleLogin = async (googleData) => {
+    console.log(googleData);
     setLoading(true);
     await fetch(`${backendURL}/api/google-login`, {
       method: "POST",
@@ -39,6 +42,7 @@ const Auth = ({onError,onSuccess,setLoading,setUser,user}) => {
       .then((res) => res.json())
       .then((res) => {
         setUser(res.user);
+        setUserImg(googleData.profileObj.imageUrl);
         localStorage.setItem("loginData", JSON.stringify(res.user)); 
         setLoading(false);
         onSuccess("User logged in successfully");
@@ -58,7 +62,7 @@ const Auth = ({onError,onSuccess,setLoading,setUser,user}) => {
 
   return (
     <>
-      {user ? (
+      {(user && userImg) ? (
         <Stack direction="row" alignItems="center" spacing={2}>
           <Link className="navbarLinks" to={{ pathname: `/checkup/${user._id}` }}>
             <Button className="navbarBtn">Checkup</Button>
@@ -71,6 +75,7 @@ const Auth = ({onError,onSuccess,setLoading,setUser,user}) => {
             <LogoutIcon className="navbarBtn"/>
           </IconButton>
           </CustomTooltip>
+          <Avatar alt={user.name} src={userImg} />
         </Stack>
       ) : (
           <GoogleLogin

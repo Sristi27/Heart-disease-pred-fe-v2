@@ -39,7 +39,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const HistoryList = () => {
   const {id} = useParams();
   const backendURL = process.env.REACT_APP_BACKEND_URL;
-  console.log(backendURL)
 
   const [isLoading, setIsLoading] = useState(true);
   const [historyData, setHistoryData] = useState([]);
@@ -56,7 +55,6 @@ const HistoryList = () => {
       })
         .then((res) => res.json())
         .then((res) => {
-          console.log(res);
           setHistoryData(res.history);
         })
         .catch(() => setErrorMsg("Sorry! We could not fetch your checkup history."))
