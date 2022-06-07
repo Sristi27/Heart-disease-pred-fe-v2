@@ -43,6 +43,13 @@ const Form = ({ submitFn }) => {
   };
   const [values, setValues] = useState(defaultObj);
   const reset = () => setValues(defaultObj);
+  const [submitInProgress,setSubmitInProgress] = useState(false);
+
+  const submitForm = () =>
+  {
+    setSubmitInProgress(true);
+    submitFn(values);
+  }
 
   return (
     <>
@@ -306,6 +313,7 @@ const Form = ({ submitFn }) => {
           <Grid item xs={12} lg={6} />
           <Grid item xs={12} lg={6}>
             <Button
+              disabled={submitInProgress}
               onClick={() => reset()}
               style={{ width: "30%", marginRight: "30px" }}
               variant="contained"
@@ -314,8 +322,9 @@ const Form = ({ submitFn }) => {
               Reset Form
             </Button>
             <Button
+              disabled={submitInProgress}
               style={{ width: "30%" }}
-              onClick={() => submitFn(values)}
+              onClick={submitForm}
               variant="contained"
               color="primary"
             >

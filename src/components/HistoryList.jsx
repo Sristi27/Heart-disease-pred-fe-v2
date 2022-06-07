@@ -15,7 +15,7 @@ import moment from "moment";
 import { Link } from "react-router-dom";
 import { elements } from "./FormElements/contents";
 import HistoryDetail from "./HistoryDetail";
-import Snackbar from "./Snackbar";
+import SnackbarElem from "./Snackbar";
 import { fontWeight } from "@mui/system";
 import Loader from "./Loader";
 
@@ -68,7 +68,7 @@ const HistoryList = () => {
   return (
     <Box mt={5}>
       {errorMsg !== "" && (
-        <Snackbar sev="error" msg={errorMsg} clearMsg={setErrorMsg} />
+        <SnackbarElem sev="error" msg={errorMsg} clearMsg={setErrorMsg} />
       )}
       {isLoading && <Loader open={isLoading} />}
       {!isLoading && historyData.length === 0 && (

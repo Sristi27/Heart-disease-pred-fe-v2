@@ -12,8 +12,8 @@ import {
 import resultImg from "./../images/resultimg.jpeg";
 import Prediction from "./Prediction";
 import { useHistory, useParams } from "react-router-dom";
-import Snackbar from "./Snackbar";
 import Loader from "./Loader";
+import SnackbarElem from "./Snackbar";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -61,7 +61,7 @@ const Checkup = () => {
           <DialogTitle id="alert-dialog-slide-title">
             <div style={{width:'100%'}}>
               {successMsg !== "" && (
-                <Snackbar
+                <SnackbarElem
                   sev="success"
                   msg={successMsg}
                   clearMsg={setSuccessMsg}

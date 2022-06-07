@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { errorData, NoRiskData, RiskData } from "../utils/resultData";
 import Form from "./Form";
-import Snackbar from "./Snackbar";
+import SnackbarElem from "./Snackbar";
 
 const Prediction = ({ setOpenDialog, setOpen, setResult, setSuccessMsg }) => {
   const [errorMsg, setErrorMsg] = useState("");
@@ -94,7 +94,7 @@ const Prediction = ({ setOpenDialog, setOpen, setResult, setSuccessMsg }) => {
 
   return (
     <>
-      {errorMsg !== "" && <Snackbar sev="error" msg={errorMsg} clearMsg={setErrorMsg} />}
+      {errorMsg !== "" && <SnackbarElem sev="error" msg={errorMsg} clearMsg={setErrorMsg} />}
       <Form submitFn={handleSubmit} />
     </>
   );

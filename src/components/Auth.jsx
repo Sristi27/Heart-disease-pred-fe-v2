@@ -24,7 +24,6 @@ const Auth = ({onError,onSuccess,setLoading}) => {
   };
 
   const handleLogin = async (googleData) => {
-    console.log(googleData);
     setLoading(true);
     await fetch(`${backendURL}/api/google-login`, {
       method: "POST",
@@ -41,21 +40,23 @@ const Auth = ({onError,onSuccess,setLoading}) => {
         localStorage.setItem("loginData", JSON.stringify(res.user)); 
         setLoading(false);
         onSuccess("User logged in successfully");
-        // history.push('/');
+        history.push('/');
         //name,email,_id->mongo_user_id
       })
       .catch((err) => onError("Login Failed. Please try again."));
   };
 
   const handleLogout = () => {
+    setLoading(true);
     localStorage.removeItem("loginData");
     setLoginData(null);
+    setLoading(false);
     history.push('/');
+    onSuccess("User logged out successfully");
   };
 
   return (
     <>
-   
       {loginData ? (
         <Stack direction="row" alignItems="center" spacing={2}>
           <Link className="navbarLinks" to={{ pathname: `/checkup/${loginData._id}` }}>
