@@ -18,7 +18,7 @@ To make the Google Login work, please head to <a href="https://console.cloud.goo
   Google Api Console</a> and create a Google cloud project, add your React client application, then go to the Credentials screen and create a new oAuth client ID for a web application.Use this client Id in .env application.
 
 
-## Node Backend - <a href="[https://github.com/Sristi27/Heart-disease-pred-fe-v2">Link</a>
+## Node Backend - <a href="https://github.com/Sristi27/Heart-disease-pred-fe-v2">Link</a>
 
 ## Python Model and API - <a href="https://github.com/Sristi27/Heart-Disease-Predictor">Link</a>
 
